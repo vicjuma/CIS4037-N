@@ -154,10 +154,20 @@ public class StockManagementGUI extends JFrame {
             // If product code not found, create a new item
             ASCStockItem newItem = new ASCStockItem(productCode, productTitle, productDescription, pounds, pence, quantity);
             stockItems.add(newItem);
+            newItem.addObserver(new PurchasingDepartment());
         }
 
         writeStockToCSV();  // Call method to write to CSV
         updateStockTable();  // Call method to update table
+        notifyLowStockObservers();
+    }
+
+    private void notifyLowStockObservers() {
+        for (ASCStockItem item : stockItems) {
+            if (item.getQuantityInStock() < 5) {
+                item.notifyObservers();
+            }
+        }
     }
 
 
@@ -220,6 +230,7 @@ public class StockManagementGUI extends JFrame {
                     // Update CSV and stock table
                     writeStockToCSV();
                     updateStockTable();
+                    notifyLowStockObservers();
                 } else {
                     JOptionPane.showMessageDialog(this, "Not enough stock available.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
