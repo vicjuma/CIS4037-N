@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ASCStockItem {
+public class ASCStockItem implements StockItem {
     private String productCode;
     private String productTitle;
     private String productDescription;
@@ -31,7 +31,7 @@ public class ASCStockItem {
     }
 
     // Notify observers when stock is updated
-    void notifyObservers() {
+    public void notifyObservers() {
         for (StockObserver observer : observers) {
             observer.updateLowStock(getProductCode(), getQuantityInStock());
         }
