@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class ASCStockItem {
     private String productCode;
@@ -9,7 +7,6 @@ public class ASCStockItem {
     private int unitPricePounds;
     private int unitPricePence;
     private int quantityInStock;
-    private List<StockObserver> observers = new ArrayList<>();
 
     // Constructor
     public ASCStockItem(String productCode, String productTitle, String productDescription,
@@ -20,21 +17,6 @@ public class ASCStockItem {
         this.unitPricePounds = unitPricePounds;
         this.unitPricePence = unitPricePence;
         this.quantityInStock = quantityInStock;
-    }
-
-    public void addObserver(StockObserver observer) {
-        observers.add(observer);
-    }
-
-    public void removeObserver(StockObserver observer) {
-        observers.remove(observer);
-    }
-
-    // Notify observers when stock is updated
-    void notifyObservers() {
-        for (StockObserver observer : observers) {
-            observer.updateLowStock(getProductCode(), getQuantityInStock());
-        }
     }
 
     // Getters and Setters
